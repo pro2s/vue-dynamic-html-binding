@@ -3,7 +3,8 @@ const app = Vue.createApp({
     data: () => ({
         cards: [],
         rows: [],
-        days: 7,
+        days: 5,
+        cardComponent: 'card-component'
     }),
     methods: {
         async add() {
@@ -29,7 +30,7 @@ const app = Vue.createApp({
 
 app.component('raw-html', {
     props: ["html"],
-    render: function (createElement) {
+    render: function () {
         const render = Vue.compile(this.html)
         return render(this.$parent)
     },
