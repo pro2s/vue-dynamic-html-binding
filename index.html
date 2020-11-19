@@ -15,10 +15,16 @@
         <div class="container">
             <div class="row">
                 <div class="col-sm">
+                    Can not use {{ variable }} in loaded template, but you can use {{ _ctx.variable }}
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm">
                     Bind to main application
                 </div>
                 <div class="col-sm">
-                    Bind to component
+                    Bind to component, inline nodes cannot be bound to component<br/>
+                    Component is recomiled on every render
                 </div>
             </div>
             <div class="row" id="app">
@@ -50,27 +56,27 @@
                 </div>
                 <div class="col-sm">
                     <div class="list-group">
-                        <a href="#" class="list-group-item list-group-item-action" :is="cardComponent">
+                        <a href="#" class="list-group-item list-group-item-action">
                           <div class="d-flex w-100 justify-content-between">
                             <h5 class="mb-1">List group item heading</h5>
                             <small>{{ days }} days ago</small>
                           </div>
                           <p class="mb-1">Donec id elit non mi porta gravida at eget metus. Maecenas sed diam eget risus varius blandit.</p>
                           <small>Donec id elit non mi porta.</small>
-                          <button type="button" class="float-right btn btn-primary">Add</button>
+                          <button @click="add()" type="button" class="float-right btn btn-primary">Add</button>
                         </a>
-                        <a href="#" class="list-group-item list-group-item-action" :is="cardComponent">
+                        <a href="#" class="list-group-item list-group-item-action">
                           <div class="d-flex w-100 justify-content-between">
                             <h5 class="mb-1">List group item heading</h5>
                             <small class="text-muted">{{ days }} days ago</small>
                           </div>
                           <p class="mb-1">Donec id elit non mi porta gravida at eget metus. Maecenas sed diam eget risus varius blandit.</p>
                           <small class="text-muted">Donec id elit non mi porta.</small>
-                          <button type="button" class="float-right btn btn-primary">Add</button>
+                          <button @click="add()" type="button" class="float-right btn btn-primary">Add</button>
                         </a>
                         <card-component v-for='(html,i) in cards' :key="i" :html='html'></card-component>
                       </div>
-                      <button @click="addComponent()" type="button" class="mt-1 btn btn-primary">Add</button>
+                      <button @click="addComponent()" type="button" class="mt-1 btn btn-primary">Add Component</button>
                 </div>
             </div>
         </div>

@@ -4,7 +4,6 @@ const app = Vue.createApp({
         cards: [],
         rows: [],
         days: 5,
-        cardComponent: 'card-component'
     }),
     methods: {
         async add() {
@@ -29,15 +28,23 @@ const app = Vue.createApp({
 })
 
 app.component('raw-html', {
+    data: () => ({
+        template: null
+    }),
     props: ["html"],
     render: function () {
-        const render = Vue.compile(this.html)
-        return render(this.$parent)
+        if (this.template) {
+            return this.template
+        }
+
+        const render = Vue.compile(this.html || '')
+        this.template = render(this.$parent)
+
+        return this.template
     },
 })
 
 app.component('card-component', {
-    props: ["html"],
     data: () => ({
         days: 1,
     }),
@@ -46,8 +53,9 @@ app.component('card-component', {
             this.days++
         }
     },
+    props: ["html"],
     render: function (context) {
-        const render = Vue.compile(this.html)
+        const render = Vue.compile(this.html || '')
         return render(context)
     },
 })
