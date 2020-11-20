@@ -1,9 +1,23 @@
+const { h } = Vue;
+const card = {
+    data: () => ({
+        days: 1,
+    }),
+    methods: {
+        add() {
+            this.days++
+        }
+    },
+}
+
 const app = Vue.createApp({
     el: '#app',
     data: () => ({
         cards: [],
+        hCards: [],
         rows: [],
         days: 5,
+        asyncComponents: [],
     }),
     methods: {
         async add() {
@@ -23,6 +37,28 @@ const app = Vue.createApp({
             } catch (error) {
                 console.log(error)
             }
+        },
+        async addHComponent() {
+            try {
+                const result = await fetch('single-async.html')
+                const text = await result.text()
+                this.hCards.push(text)
+            } catch (error) {
+                console.log(error)
+            }
+        },
+        async addAsyncComponent() {
+            const name = 'async-' + Math.floor(Math.random() * Math.floor(10000))
+            const component = Vue.defineAsyncComponent(async () => {
+                const result = await fetch('single-async.html')
+                const text = await result.text()
+                return {
+                    ...card,
+                    template: text,
+                }
+            })
+            this.asyncComponents.push(name)
+            app.component(name, component)
         }
     }
 })
@@ -57,6 +93,13 @@ app.component('card-component', {
     render: function (context) {
         const render = Vue.compile(this.html || '')
         return render(context)
+    },
+})
+
+app.component('h-card', {
+    props: ["html"],
+    render: function () {
+        return h({...card, template: this.html || ''})
     },
 })
 
