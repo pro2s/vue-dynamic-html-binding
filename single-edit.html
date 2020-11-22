@@ -1,0 +1,11 @@
+<a href="#" class="list-group-item list-group-item-action form-inline">
+    <div class="d-flex w-100 justify-content-between">
+        <h5 class="mb-1">List group item heading</h5>
+        <small class="text-muted">{{ _ctx.days }} days ago</small>
+    </div>
+    <p class="mb-1">Donec id elit non mi porta gravida at eget metus. Maecenas sed diam eget
+        risus varius blandit.</p>
+    <small :ref="(el) => set(:id:, el)" v-show="_ctx.edited[':id:'] === undefined" class="text-muted">Donec id elit non mi porta.</small>
+    <edit-form id=":id:" :edited="_ctx.edited" @edit="_ctx.edit"></edit-form>
+    <button @click="addEdit()" type="button" class="float-right btn btn-primary">Add Edit</button>
+</a>
